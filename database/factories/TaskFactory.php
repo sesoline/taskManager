@@ -20,10 +20,10 @@ class TaskFactory extends Factory
         return [  
             // Se creara una magricion con tareas de usuarios registrador en la DB
             // Las tareas son generadas de un mes antes a 3 meses despues
-            'Nombre'        => $this->faker->sentence(),
-            'Detalle'       => $this->faker->paragraph(1),
-            'Fecha_limite'  => $this->faker->dateTimeBetween($startDate = '-1 month', $endDate = '+3 months'),
-            'usuario_id'    => $this->faker->randomElement(User::all())['id'],
+            'Name'        => $this->faker->sentence(),
+            'Detail'       => $this->faker->paragraph(1),
+            'Deadline'  => $this->faker->dateTimeBetween($startDate = '-1 month', $endDate = '+3 months'),
+            'User_id'    => $this->faker->randomElement(User::all())['id'],
         ];
     }
 }

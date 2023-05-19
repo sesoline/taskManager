@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Inertia\Inertia; 
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -13,9 +14,20 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        // Before to render the CRUD is neccesary yo get the user ID
+        $user_id = Auth::user()->id;
+
+        // Query to Task DB where user_id is current user 
+        $query = Task::where('User_id',$user_id)->get();
+
+        // Go to the CRUD with user id and its own tasks
         return Inertia::render('Dashboard',[
-            'tasks' => Task::all()]);
+            'tasks'     => $query,     
+            'user_id'   => $user_id,
+        ]);
+
+        
+            
     }
 
     /**
@@ -24,6 +36,7 @@ class TaskController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -31,7 +44,25 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // Validate data before create a new task
+        $request->validate([
+            'Name'      => 'required|string|max:100',   // Max 100 characters, however in the TaskManager.vue there is the same restriction
+            'Detail'    => 'required|string|max:500',   // Max 500 characters, however in the TaskManager.vue there is the same restriction
+            'Deadline'  => 'required',
+            'User_id'   => 'required',
+        ]);
+
+        // save a new student into DB 
+        Task::create([
+            'Name'      => $request['Name'],
+            'Detail'    => $request['Detail'],
+            'Deadline'  => $request['Deadline'],
+            'User_id'   => $request['User_id'],
+        ]);
+
+        // go back the CRUD view => Dashoboard.vue
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -55,7 +86,23 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        // Another option to get the data
+        $Data = request();     
+        
+        // Validate data before create a new task
+        $Data->validate([
+            'Name'      => 'required',
+            'Detail'    => 'required',
+            'Deadline'  => 'required',
+            'User_id'   => 'required',
+        ]);
+
+
+        // Update the Task into the DB
+        $task->update($request->request->all());
+
+        // go back the CRUD view => Dashoboard.vue
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -64,5 +111,8 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+        $task->delete();
+
+        return redirect()->route('tasks.index');
     }
 }

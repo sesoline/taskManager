@@ -32,3 +32,8 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', [TaskController::class, 'index' ])->name('dashboard');
 });
+
+// CRUD Routs for Task Controller (only for registered users)
+Route::middleware(['auth'])->group(function () {
+    Route::resource('tasks', TaskController::class);
+});
