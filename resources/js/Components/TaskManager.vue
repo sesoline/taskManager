@@ -5,14 +5,14 @@
             <!-- HEADER -->
             <div>
                 <div class="flex justify-end">
-                    <button class="bg-blue-500 hover:bg-blue-400 text-white mx-4 mt-4 px-4 py-2 rounded" @click="createTask()">New Task</button>            
+                    <button class="bg-blue-500 hover:bg-blue-400 text-white mx-4 mt-4 px-4 py-2 rounded" @click="createTask()">New Task</button>
                 </div>
             </div>
 
-            
-    
+
+
             <!-- BODY -->
-            <div>            
+            <div>
                 <div class="bg-white shadow-md rounded-lg overflow-hidden mx-4 mb-4 mt-2">
                 <table class="min-w-full">
                     <!-- Table header -->
@@ -30,7 +30,7 @@
                         <tr v-for="task in tasks" :key="task.id" class="border-b border-gray-200 justify-center" >
                             <td class="py-2 px-4">
                                 <input type="checkbox" @click="updateTask(task)" :checked="task.Completed"/>
-                            </td> 
+                            </td>
                             <td class="py-2 px-4"> {{ task.Name }}</td>
                             <td class="py-2 px-4"> {{ task.Detail }} </td>
                             <td class="2 px-py-4"> {{ task.Deadline }} </td>
@@ -42,9 +42,9 @@
                                 <a href="#" @click.prevent="editTask(task)">
                                     <img class="m-2" src="https://www.shareicon.net/data/16x16/2017/03/02/880216_settings_512x512.png" alt="See">
                                 </a>
-                                
+
                             </td>
-                        </tr>                                        
+                        </tr>
                     </tbody>
                 </table>
                 </div>
@@ -56,12 +56,12 @@
 
         <!-- Message if the table is empty -->
         <div v-if="tasks.length == 0" class="text-center m-5 text-gray-700 text-xl"> There are not tasks registered in the system</div>
-        
-        
+
+
         <!-- MODAL -->
         <div>
-            <div>                
-            <modal :show="showModal" @close="{showModal=false;}">                
+            <div>
+            <modal :show="showModal" @close="{showModal=false;}">
 
                 <!-- Modal form content -->
                 <template v-slot:content>
@@ -73,7 +73,7 @@
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="taskName">
                                 Task Name
                                 </label>
-                                <input  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                <input  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         v-model="form.Name" id="taskName" type="text" placeholder="Task Name"  maxlength="100">
                             </div>
                             <div class="mb-6">
@@ -82,7 +82,7 @@
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="details">
                                 Details
                                 </label>
-                                <input  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                <input  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         v-model="form.Detail" id="details" type="text" placeholder="Details"  maxlength="500">
                             </div>
                             <div class="mb-4">
@@ -91,21 +91,21 @@
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="deadline">
                                 Deadline
                                 </label>
-                                <input  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                <input  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         v-model="form.Deadline" id="deadline" type="date">
                             </div>
-            
+
                             <div class="flex justify-end">
-                                <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+                                <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                         :value=" createForm ? 'Create' : 'Update' " type="submit">
-                                
+
                             </div>
                         </form>
 
                     </div>
                 </template>
 
-                
+
                 </modal>
             </div>
         </div>
@@ -130,19 +130,18 @@ export default {
 
     data() {
         return {
-            showModal: false, 
+            showModal: false,
             createForm: true,
             form: {
                 Name: null,
                 Detail: null,
                 Deadline:null,
-                User_id: null,
-            }      
+            }
         }
     },
 
     methods: {
-        
+
         createTask(){
 
             // Local form will null in order to recive new data
@@ -152,12 +151,11 @@ export default {
                 Detail: null,
                 Deadline:null,
                 Completed: false,
-                User_id: this.user_id,      // Send the current user_id
             }
 
             // it will show empty modal
-            this.showModal = true;    
-            
+            this.showModal = true;
+
         },
 
         editTask(task){
@@ -165,11 +163,11 @@ export default {
             // Get the data to local variable
             this.createForm = false
             this.form = task
-            
-            
+
+
             // it will show modal with data
-            this.showModal = true;            
-            
+            this.showModal = true;
+
         },
 
         updateTask(task){
@@ -178,7 +176,7 @@ export default {
             this.form = task
 
             // We will send the negation value
-            this.form.Completed = !this.form.Completed  
+            this.form.Completed = !this.form.Completed
 
             // Send data
             this.$inertia.put(this.route('tasks.update',this.form.id),this.form)
@@ -191,19 +189,19 @@ export default {
             }
         },
 
-        submitTask() {        
-            
+        submitTask() {
+
             // This fuction could update or create a Task
             if(this.createForm == true){
-                // Create a new task   
+                // Create a new task
                 this.$inertia.post(this.route('tasks.store'), this.form )
-            } else {                           
+            } else {
                 // Update the task
                 this.$inertia.put(this.route('tasks.update',this.form.id),this.form)
             }
 
             // Close modal
-            this.showModal = false;  
+            this.showModal = false;
         },
 
         convertToBoolean(value) {
@@ -212,6 +210,6 @@ export default {
 
 
     },
-    
+
 }
 </script>

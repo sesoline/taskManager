@@ -41,7 +41,7 @@ Once Docker and Docker Compose are installed, please follow the steps below:
     ```
 
     ```shell
-    ./vendor/bin/sail php artisan migrate 
+    ./vendor/bin/sail php artisan migrate --seed
     ```
 
 3. If migrations fails, probably container does not have write access, run:
@@ -65,7 +65,15 @@ Once Docker and Docker Compose are installed, please follow the steps below:
     
 Remember to change in `.env` the `APP_PORT` for an available slot in your PC
 
-visit [localhost:7777](`localhost:{APP_PORT}`)
+Visit `localhost:{APP_PORT}`
+
+### Test
+
+ 1. Test created for this assignment
+    ```shell
+    ./vendor/bin/sail php artisan test --filter test_only_user_can_save_task
+    ```
+
 
 ### After run migration
 
