@@ -19,8 +19,9 @@ class DatabaseSeeder extends Seeder
 
         // Usuario para realizar prubas
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name'      => 'Test User',
+            'email'     => 'test@example.com',
+            'password'  =>  bcrypt('testUser001'),     // Default password
         ]);
 
         // Se crearan 50 tareas pertenecientes a los usuarios anteriores de no mas de 3 meses de vencimiento

@@ -5,9 +5,11 @@
             <!-- HEADER -->
             <div>
                 <div class="flex justify-end">
-                    <button class="bg-blue-500 hover:bg-blue-400 text-white mx-4 mt-4 px-4 py-2 rounded" @click="createTask()">New task</button>            
+                    <button class="bg-blue-500 hover:bg-blue-400 text-white mx-4 mt-4 px-4 py-2 rounded" @click="createTask()">New Task</button>            
                 </div>
             </div>
+
+            
     
             <!-- BODY -->
             <div>            
@@ -16,6 +18,7 @@
                     <!-- Table header -->
                     <thead>
                         <tr class="bg-gray-200">
+                            <th class="py-2 px-4 text-gray-600 font-semibold uppercase">Completed</th>
                             <th class="py-2 px-4 text-gray-600 font-semibold uppercase">Task name</th>
                             <th class="py-2 px-4 text-gray-600 font-semibold uppercase">Detail</th>
                             <th class="py-2 px-4 text-gray-600 font-semibold uppercase">Deadline</th>
@@ -25,6 +28,9 @@
                     <!-- Table content -->
                     <tbody class="text-center">
                         <tr v-for="task in tasks" :key="task.id" class="border-b border-gray-200 justify-center" >
+                            <td class="py-2 px-4">
+                                <input type="checkbox" @click="updateTask(task)" :checked="task.Completed"/>
+                            </td> 
                             <td class="py-2 px-4"> {{ task.Name }}</td>
                             <td class="py-2 px-4"> {{ task.Detail }} </td>
                             <td class="2 px-py-4"> {{ task.Deadline }} </td>
@@ -45,10 +51,13 @@
 
 
             </div>
-
         </div>
         <!-- END CRUD TABLE -->
 
+        <!-- Message if the table is empty -->
+        <div v-if="tasks.length == 0" class="text-center m-5 text-gray-700 text-xl"> There are not tasks registered in the system</div>
+        
+        
         <!-- MODAL -->
         <div>
             <div>                
@@ -142,6 +151,7 @@ export default {
                 Name: null,
                 Detail: null,
                 Deadline:null,
+                Completed: false,
                 User_id: this.user_id,      // Send the current user_id
             }
 
@@ -160,6 +170,19 @@ export default {
             // it will show modal with data
             this.showModal = true;            
             
+        },
+
+        updateTask(task){
+
+            // This function is only to update the "compleated property"
+            this.form = task
+
+            // We will send the negation value
+            this.form.Completed = !this.form.Completed  
+
+            // Send data
+            this.$inertia.put(this.route('tasks.update',this.form.id),this.form)
+
         },
 
         destroyTask(id){
@@ -181,6 +204,10 @@ export default {
 
             // Close modal
             this.showModal = false;  
+        },
+
+        convertToBoolean(value) {
+            return value === 1;
         },
 
 

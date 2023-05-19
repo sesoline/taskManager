@@ -30,8 +30,8 @@ defineProps({
                 </svg>
             </div>
 
-            <div class="text-center text-lg"> TASK MANAGER APP</div>
-            <div class="text-right text-ls"> By: Andres Munoz</div>
+            <div class="text-center dark:text-gray-400 text-lg"> TASK MANAGER APP</div>
+            <div class="text-right dark:text-gray-400 text-ls"> By: Andres Munoz</div>
 
             <div class="flex justify-center mt-16 px-6 sm:items-center sm:justify-between">
                 <div class="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-left">

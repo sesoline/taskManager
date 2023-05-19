@@ -18,12 +18,14 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [  
-            // Se creara una magricion con tareas de usuarios registrador en la DB
+            // Se creara una migracion con tareas de usuarios registrador en la DB
             // Las tareas son generadas de un mes antes a 3 meses despues
             'Name'        => $this->faker->sentence(),
-            'Detail'       => $this->faker->paragraph(1),
-            'Deadline'  => $this->faker->dateTimeBetween($startDate = '-1 month', $endDate = '+3 months'),
-            'User_id'    => $this->faker->randomElement(User::all())['id'],
+            'Detail'      => $this->faker->paragraph(1),
+            'Deadline'    => $this->faker->dateTimeBetween($startDate = '-1 month', $endDate = '+3 months'),
+            'Completed'   => $this->faker->boolean(),
+            'User_id'     => $this->faker->randomElement(User::all())['id'],
+            
         ];
     }
 }

@@ -51,6 +51,7 @@ class TaskController extends Controller
             'Detail'    => 'required|string|max:500',   // Max 500 characters, however in the TaskManager.vue there is the same restriction
             'Deadline'  => 'required',
             'User_id'   => 'required',
+            'Completed' => 'required',
         ]);
 
         // save a new student into DB 
@@ -59,6 +60,7 @@ class TaskController extends Controller
             'Detail'    => $request['Detail'],
             'Deadline'  => $request['Deadline'],
             'User_id'   => $request['User_id'],
+            'Completed' => $request['Completed'],
         ]);
 
         // go back the CRUD view => Dashoboard.vue
@@ -95,6 +97,7 @@ class TaskController extends Controller
             'Detail'    => 'required',
             'Deadline'  => 'required',
             'User_id'   => 'required',
+            'Completed' => 'required',
         ]);
 
 
