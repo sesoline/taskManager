@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        // Before to render the CRUD is neccesary yo get the user ID
+        // Before to render the CRUD is neccesary to get the user ID
         $user_id = Auth::user()->id;
 
         // Query to Task DB where user_id is current user
@@ -87,11 +87,12 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        if($task->id !== Auth::id()){
-            abort(401);
-        }
+        // if($task->id !== Auth::id()){
+        //     abort(401);
+        // }
         // Another option to get the data
         $Data = request();
+
 
         // Validate data before create a new task
         $Data->validate([
